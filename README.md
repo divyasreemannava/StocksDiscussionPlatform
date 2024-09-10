@@ -90,6 +90,8 @@ project-root <br/>
   
 5. Bonus (Optional):<br/>
     - GET /api/posts: Pagination with page and limit query parameters.<br/>
+    - Socket.io: Real-time updates for new comments and likes in postController.js for likes as well as for comments in commentController.js.
+      
 
 **Running the Project**
   - npm start
