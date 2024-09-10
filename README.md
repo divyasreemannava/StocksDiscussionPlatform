@@ -48,7 +48,6 @@ project-root <br/>
 │   ├── post_schema.js<br/>
 │<br/>
 ├── controllers/         # Logic for handling requests<br/>
-│   ├── likeController.js<br/>
 │   ├── postController.js<br/>
 │   ├── commentController.js<br/>
 │   ├── userController.js<br/>
