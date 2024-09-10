@@ -1,5 +1,6 @@
 const Comment = require('../schemas/comment_schema.js');
 const Post = require('../schemas/post_schema.js');
+const { getIo } = require('../socket/socketConnection.js');
 
 // Add a Comment to a Post
 exports.addComment = async (req, res) => {
@@ -19,6 +20,14 @@ exports.addComment = async (req, res) => {
     });
 
     await newComment.save();
+
+    getIo().emit('newComment', {
+      postId,
+      comment: newComment.comment,
+      userId,
+      createdAt: newComment.createdAt,
+    });
+
     res.status(201).json({ success: true, commentId: newComment._id, message: 'Comment added' });
   } catch (err) {
     res.status(500).json({ message: 'Server Error' });

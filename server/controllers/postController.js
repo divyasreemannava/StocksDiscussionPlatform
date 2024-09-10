@@ -1,5 +1,7 @@
 const Post = require('../schemas/post_schema.js');
 const Comment = require("../schemas/comment_schema.js");
+const { getIo } = require('../socket/socketConnection.js');
+
 // const { post } = require('../routes/post_routes/post_route.js');
 
 // Create a Stock Post
@@ -144,6 +146,15 @@ exports.likePost = async (req,res) => {
 
     post.likes.push(userId);
     await post.save();
+
+    getIo().emit('newLike', {
+      postId,
+      userId,
+      likesCount: post.likes.length,
+    });
+
+
+
     res.status(200).json({ success: true, message: 'Post liked' });
   }
   catch (err) {

@@ -1,7 +1,16 @@
 const express = require("express")
+const http = require('http');
+
 require('dotenv').config()
+
 const port = process.env.PORT || 8080
 const app = express()
+const { initSocket } = require('./socket/socketConnection.js');
+const server = http.createServer(app);
+
+initSocket(server);
+
+
 app.use(express.json())
 const login_route = require("./routes/user_routes/user_route.js")
 const post_route = require("./routes/post_routes/post_route.js")
