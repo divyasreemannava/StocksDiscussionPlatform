@@ -93,7 +93,11 @@ project-root <br/>
       
 
 **Running the Project**
-  - npm start
+   - npm start
+
+
+[Stock_Discussion_APIS.postman_collection.json](https://github.com/user-attachments/files/16947753/Stock_Discussion_APIS.postman_collection.json)
+
 
 
 
