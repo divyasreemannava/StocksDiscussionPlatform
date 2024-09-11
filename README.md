@@ -71,7 +71,7 @@ project-root <br/>
    - POST /api/auth/register: Register a new user.<br/>
    - POST /api/auth/login: Login a user and return a token. <br/>
    - GET /api/user/profile/:userId: Get user profile details.<br/>
-   - PUT /api/user/profile: Update user profile.<br/>
+   - PUT /api/user/profile: Update user profile. for profile pisture for storage of images, used multer<br/>
      
 2. Stock Post Management:<br/>
     - POST /api/posts: Create a stock post (Auth required).<br/>
