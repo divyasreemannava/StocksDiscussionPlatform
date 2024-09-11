@@ -150,28 +150,59 @@ exports.getUserById = async (req,res)=>{
     
 }
 
-exports.modifyUser = async (req,res)=>{
-    const { name, bio, picture } = req.body;
-    const user_email = req.user.email
-    // console.log("--------------",req.user)
-    try{
-        const user_data = await User.findOneAndUpdate({email:user_email},{
-            name:name,
-            bio:bio,
-            picture:picture,
-            email:user_email
-        },{
-            new:true
-        })
-        if(!user_data){
-            return res.status(404).json({ success: false, message: 'User not found' })
-        }
-        res.status(200).json({ success: true, message: 'Profile updated', user: user_data })    
-    }
-    catch(err){
-        res.status(500).json({
-            message:"Internal server error"
-        })
-    }
+// exports.modifyUser = async (req,res)=>{
+//     const { name, bio, picture } = req.body;
+//     const user_email = req.user.email
+//     // console.log("--------------",req.user)
+//     try{
+//         const user_data = await User.findOneAndUpdate({email:user_email},{
+//             name:name,
+//             bio:bio,
+//             picture:picture,
+//             email:user_email
+//         },{
+//             new:true
+//         })
+//         if(!user_data){
+//             return res.status(404).json({ success: false, message: 'User not found' })
+//         }
+//         res.status(200).json({ success: true, message: 'Profile updated', user: user_data })    
+//     }
+//     catch(err){
+//         res.status(500).json({
+//             message:"Internal server error"
+//         })
+//     }
 
-}
+// }
+exports.modifyUser = async (req, res) => {
+    const { name, bio } = req.body;
+    const picture = req.file ? req.file.path : undefined;
+    const user_email = req.user.email
+
+  
+    try {
+      const updatedFields = {
+        name:name,
+            bio:bio,
+            email:user_email,
+        ...(picture && { picture }) // Only update if profile picture is provided
+      };
+  
+      const user = await User.findByIdAndUpdate(req.user.id, updatedFields, { new: true });
+  
+      res.status(200).json({
+        success: true,
+        message: 'Profile updated',
+        user: {
+          id: user._id,
+          username: user.username,
+          bio: user.bio,
+          profilePicture: user.profilePicture
+        }
+      });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+  
